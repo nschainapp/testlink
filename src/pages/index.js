@@ -1,69 +1,37 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
 
-import Bio from "../components/bio"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import Layout from "../components/layout";
+//import { Link } from "@reach/router";
+import GatsbyLink from "gatsby-link";
 
 class BlogIndex extends React.Component {
   render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
-
     return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          title="All posts"
-          keywords={[`blog`, `gatsby`, `javascript`, `react`]}
-        />
-        <Bio />
-        {posts.map(({ node }) => {
-          const title = node.frontmatter.title || node.fields.slug
-          return (
-            <div key={node.fields.slug}>
-              <h3
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
-              >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-            </div>
-          )
-        })}
+      <Layout location={this.props.location}>
+        <GatsbyLink
+          to={"/v.1.5/test-docs/how-to/d-plugin-community-to-official"}
+        >
+          d-plugin-community-to-official
+        </GatsbyLink>
+        <br />
+        <GatsbyLink to={"/v.1.5/test-docs/how-to/d-plugin"}>
+          d-plugin
+        </GatsbyLink>
+        <br />
+
+        <br />
+        <GatsbyLink
+          to={"/v.1.5/test-docs/how-to/install-test-release-as-a-trial"}
+        >
+          install-test-release-as-a-trial
+        </GatsbyLink>
+        <br />
+        <GatsbyLink to={"/v.1.5/test-docs/how-to/install-test-release"}>
+          install-test-release
+        </GatsbyLink>
       </Layout>
-    )
+    );
   }
 }
 
-export default BlogIndex
-
-export const pageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
-        }
-      }
-    }
-  }
-`
+export default BlogIndex;
